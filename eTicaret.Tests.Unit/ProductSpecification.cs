@@ -13,7 +13,7 @@ public class ProductSpecification
         // Act
         var action = async () => await command.Handle(request, default);
         // Assert
-        await action.Should().ThrowAsync<ArgumentException>().WithMessage("Name must be greater than 3 characters");
+        await action.Should().ThrowAsync<ProductNameNotValidException>();
     }
 
     [Fact]
@@ -25,7 +25,7 @@ public class ProductSpecification
         //Act
         var action = async () => await command.Handle(request, default);
         //Assert
-        await action.Should().ThrowAsync<ArgumentException>().WithMessage("Price must be greater than 0");
+        await action.Should().ThrowAsync<ProductPriceNotValidException>();
     }
 }
 
@@ -38,13 +38,29 @@ public sealed class CreateProductCommandHandler
     {
         if (request.Name.Length < 3)
         {
-            throw new ArgumentException("Name must be greater than 3 characters");
+            throw new ProductNameNotValidException();
         }
         if (request.Price == 0 || request.Price == -1)
         {
-            throw new ArgumentException("Price must be greater than 0");
+            throw new ProductPriceNotValidException();
         }
 
         await Task.CompletedTask;
+    }
+}
+
+public sealed class ProductNameNotValidException : Exception
+{
+    public ProductNameNotValidException() : base("Name must be greater than 3 characters")
+    {
+        
+    }
+}
+
+public sealed class ProductPriceNotValidException : Exception
+{
+    public ProductPriceNotValidException() : base ("Price must be greater than 0")
+    {
+        
     }
 }
