@@ -1,0 +1,8 @@
+﻿Test yazarken 
+
+1.Önce başarısız test yazıyoruz,
+testteki tüm class ve metotları sadece ihtiyacımızı kadar oluşturuyoruz.
+
+2.Testi başarılı kılıyoruz. 
+
+3. Refactoring ile kodu iyileştiriyoruz.
